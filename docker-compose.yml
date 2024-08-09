@@ -1,0 +1,26 @@
+version: '3.0'
+services:
+ mysql:
+  image: mysql:8.0
+  environment:
+   MYSQL_ROOT_PASSWORD: rootpassword
+   MYSQL_DATABASE: airflow_db
+   MYSQL_USER: airflow_user
+   MYSQL_PASSWORD: airflow_password
+  ports:
+  - "3307:3306"
+  volumes:
+   - ./mysql_data:/var/lib/mysql
+ airflow:
+  image: airflow-sql:latest
+  depends_on:
+   - mysql
+  environment:
+   AIRFLOW__CORE__SQL_ALCHEMY_CONN: mysql://airflow_user:airflow_password@mysql/airflow_db
+   AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+  build: .
+  volumes:
+   - ./dags:/opt/airflow/dags
+  ports:
+   - "8080:8080"
+  entrypoint: /opt/airflow/entrypoint.sh
