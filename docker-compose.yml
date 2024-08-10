@@ -18,6 +18,8 @@ services:
   environment:
    AIRFLOW__CORE__SQL_ALCHEMY_CONN: mysql://airflow_user:airflow_password@mysql/airflow_db
    AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+  volumes:
+   - ./data:/opt/airflow/data
   build: .
   ports:
    - "8080:8080"

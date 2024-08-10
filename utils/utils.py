@@ -7,7 +7,7 @@ from datetime import datetime
 
 def save_data(file_content: Union[List[Dict], Dict, List, str, pd.DataFrame], file_name: str, file_type: str, base_path="./data", zone: str = "raw", context: str = "books") -> str:
     try:
-        current_date = datetime.now().strftime("%Y%m%d-%H-%M-%S")
+        current_date = datetime.now().strftime("%Y%m%d")
         dir_path = f"{base_path}/{zone}/{context}/{current_date}"
         print(f'Going to create this dir:  {dir_path}')
         if not os.path.isdir(dir_path):

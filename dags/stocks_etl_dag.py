@@ -8,7 +8,7 @@ import configs.constants as Constants
 
 stocks_etl_dag = DAG(
     dag_id="stocks_etl_dag",
-    start_date=datetime(2024, 8, 1),
+    start_date=datetime(2024, 8, 10),
     schedule="@daily",
     description="ETL DAG to collect the NASDAQ stock data.",
     default_args={
