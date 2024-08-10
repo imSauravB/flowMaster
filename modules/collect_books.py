@@ -1,3 +1,5 @@
+import sys
+sys.path.append('/opt/airflow')
 import requests
 from datetime import datetime
 from utils.utils import save_data

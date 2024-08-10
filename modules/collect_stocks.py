@@ -1,3 +1,6 @@
+import sys
+sys.path.append('/opt/airflow')
+print(sys.path)
 from urllib import request
 from yfinance import Ticker
 from pprint import pprint
@@ -16,7 +19,6 @@ def collect_stock_data(stock_ticker: str):
         ticker_data = Ticker(stock_ticker)
         df_ticker_data = ticker_data.history('1mo')
         if not df_ticker_data.empty:
-            pprint(df_ticker_data)
             df_ticker_data.reset_index(inplace=True)
             return df_ticker_data
         else:
@@ -49,4 +51,5 @@ if __name__ == "__main__":
         stock_data = collect_stock_data(ticker)
         if stock_data is not None:
             file_name = f"{current_date}_stock_{ticker}"
+            pprint(f'{file_name}')
             save_data(stock_data, file_name, base_path=data_lake_path, zone="raw", context="stocks", file_type=Constants.STOCKS_FILE_FORMAT)

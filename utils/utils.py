@@ -3,10 +3,17 @@ import json
 import os
 import csv
 from typing import Dict, List, Union
+from datetime import datetime
 
 def save_data(file_content: Union[List[Dict], Dict, List, str, pd.DataFrame], file_name: str, file_type: str, base_path="./data", zone: str = "raw", context: str = "books") -> str:
     try:
-        file_path = f"{base_path}/{zone}/{context}/{file_name}.{file_type}"
+        current_date = datetime.now().strftime("%Y%m%d-%H-%M-%S")
+        dir_path = f"{base_path}/{zone}/{context}/{current_date}"
+        print(f'Going to create this dir:  {dir_path}')
+        if not os.path.isdir(dir_path):
+            os.mkdir(dir_path)
+        file_path = f"{dir_path}/{file_name}.{file_type}"
+        print(f'{file_path}')
         if file_type == "json":
             with open(file_path, 'w+') as f:
                 json.dump(file_content, f, indent=4)

@@ -1,5 +1,7 @@
 import os
 import json
+import sys
+sys.path.append('/opt/airflow')
 import pandas as pd
 from datetime import datetime
 from utils.utils import save_data

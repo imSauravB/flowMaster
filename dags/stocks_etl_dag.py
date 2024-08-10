@@ -49,3 +49,5 @@ refine_books_task = BashOperator(
     env={"DATA_LAKE_PATH": Constants.BASE_DATA_LAKE_PATH},
     bash_command=f"python3 {Constants.BASE_MODULE_PATH}refine_stocks.py --data_lake_path $DATA_LAKE_PATH",
 )
+
+collect_books_task >> refine_books_task
