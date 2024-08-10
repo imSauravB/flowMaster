@@ -1,9 +1,7 @@
 from datetime import datetime
 from airflow import DAG
 from datetime import datetime, timedelta
-
-BASE_MODULE_PATH
-BASE_DATA_LAKE_PATH
+import configs.constants as Constants
 
 
 stocks_etl_dag = DAG(
@@ -18,7 +16,7 @@ stocks_etl_dag = DAG(
         'email_on_failure': False,
         'email_on_retry': False,
         'retries': 3,
-        'retry_delay': timedelta(minutes=5),
+        'retry_delay': timedelta(minutes=3),
         # 'start_date': days_ago(2),
         # 'queue': 'bash_queue',
         # 'pool': 'backfill',
@@ -39,8 +37,15 @@ stocks_etl_dag = DAG(
 )
 
 collect_books_task = BashOperator(
-    task_id="",
-    dag=,
-    env={},
-    bash_command=,
+    task_id="collect_stocks",
+    dag=stocks_etl_dag,
+    env={{"DATA_LAKE_PATH": Constants.BASE_DATA_LAKE_PATH}},
+    bash_command=f"python3 {Constants.BASE_MODULE_PATH}collect_stocks.py --data_lake_path $DATA_LAKE_PATH",
+)
+
+refine_books_task = BashOperator(
+    task_id="refine_stocks",
+    dag=stocks_etl_dag,
+    env={"DATA_LAKE_PATH": Constants.BASE_DATA_LAKE_PATH},
+    bash_command=f"python3 {Constants.BASE_MODULE_PATH}treat_books.py --data_lake_path $DATA_LAKE_PATH",
 )
