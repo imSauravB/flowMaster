@@ -4,9 +4,9 @@ import os
 import csv
 from typing import Dict, List, Union
 
-def save_data(file_content: Union[List[Dict], Dict, List, str, pd.DataFrame], file_name: str, file_type: str, zone: str = "raw", context: str = "books") -> str:
+def save_data(file_content: Union[List[Dict], Dict, List, str, pd.DataFrame], file_name: str, file_type: str, base_path="./data_lake", zone: str = "raw", context: str = "books") -> str:
     try:
-        file_path = f"./data_lake/{zone}/{context}/{file_name}.{file_type}"
+        file_path = f"{base_path}/{zone}/{context}/{file_name}.{file_type}"
         if file_type == "json":
             with open(file_path, 'w+') as f:
                 json.dump(file_content, f, indent=4)

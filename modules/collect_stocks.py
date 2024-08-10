@@ -5,6 +5,7 @@ from pprint import pprint
 from datetime import datetime
 import requests
 from utils import save_data
+from argparse import ArgumentParser
 
 ticker_list = ['APPL', 'MSFT', 'AMZN', 'META', 'NTFX', 'GOOG']
 
@@ -38,8 +39,13 @@ def get_top_100_stocks():
         print(f"An error occurred: {e}")
         return None
 
-for ticker in ticker_list:
-    stock_data = collect_stock_data(ticker)
-    if stock_data is not None:
-        file_name = f"{current_date}_stock_{ticker}"
-        save_data(stock_data, file_name, zone="raw", context="stocks", file_type="csv")
+if __name__ == "__main__":
+    parser = ArgumentParser()
+    parser.add_argument("--data_lake_path", required=True, help="Path to the data lake")
+    args = parser.parse_args()
+    data_lake_path = args.data_lake_path
+    for ticker in ticker_list:
+        stock_data = collect_stock_data(ticker)
+        if stock_data is not None:
+            file_name = f"{current_date}_stock_{ticker}"
+            save_data(stock_data, file_name, base_path=data_lake_path, zone="raw", context="stocks", file_type="csv")

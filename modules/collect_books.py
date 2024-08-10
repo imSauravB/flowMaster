@@ -19,7 +19,7 @@ def collect_single_book_data(base_url, open_library_id, file_format):
         return response
     except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
-        return ERROR
+        return None
 
 def main():
     print("Strating...")
