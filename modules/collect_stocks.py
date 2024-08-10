@@ -23,7 +23,7 @@ def collect_stock_data(stock_ticker: str):
             print(f"Error: Could not retrieve the latest data for {stock_ticker}.")
             return None
     except Exception as e:
-        print(f"Failed to fetch data for {stock}: {e}")
+        print(f"Failed to fetch data for {stock_ticker}: {e}")
         return None
 
 def get_top_100_stocks():
@@ -44,7 +44,8 @@ if __name__ == "__main__":
     parser.add_argument("--data_lake_path", required=True, help="Path to the data lake")
     args = parser.parse_args()
     data_lake_path = args.data_lake_path
-    for ticker in ticker_list:
+    stock_symbols=get_top_100_stocks()
+    for ticker in stock_symbols:
         stock_data = collect_stock_data(ticker)
         if stock_data is not None:
             file_name = f"{current_date}_stock_{ticker}"
