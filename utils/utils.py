@@ -4,13 +4,15 @@ import os
 import csv
 from typing import Dict, List, Union
 from datetime import datetime
+import pyarrow as pa
+import pyarrow.parquet as pq
 
 def save_data(file_content: Union[List[Dict], Dict, List, str, pd.DataFrame], file_name: str, file_type: str, base_path="./data", zone: str = "raw", context: str = "books") -> str:
     try:
         current_date = datetime.now().strftime("%Y%m%d")
         dir_path = f"{base_path}/{zone}/{context}/{current_date}"
-        print(f'Going to create this dir:  {dir_path}')
         if not os.path.isdir(dir_path):
+            print(f'Going to create this dir:  {dir_path}')
             os.makedirs(dir_path)
         file_path = f"{dir_path}/{file_name}.{file_type}"
         print(f'{file_path}')
@@ -34,7 +36,9 @@ def save_data(file_content: Union[List[Dict], Dict, List, str, pd.DataFrame], fi
         
         elif file_type == "parquet":
             df = pd.DataFrame(file_content)
-            df.to_parquet(file_path, index=False)
+            table = pa.Table.from_pandas(df)
+            pq.write_table(table, file_path)
+            #df.to_parquet(file_path, index=False)
         
         else:
             return f"Unsupported file type: {file_type}"

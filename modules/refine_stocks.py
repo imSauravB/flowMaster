@@ -22,7 +22,7 @@ def dataPreProcessing(data_lake_path: str):
             df_stocks['Low'] = df_stocks['Low'].astype('float64')
             df_stocks['Close'] = df_stocks['Close'].astype('float64')
             df_stocks['Volume'] = df_stocks['Volume'].astype('int64')
-            df_stocks['ticker_name'] = str.split(file_name, '_')[2]
+            df_stocks['ticker_name'] = (str.split(file_name, '_')[2]).split('.')[0]
             df_stocks['collect_date'] = datetime.strptime(str.split(file_name, '_')[0], '%Y%m%d').strftime('%Y-%m-%d')
 
             processed_stocks.append(df_stocks)

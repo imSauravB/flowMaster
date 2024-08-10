@@ -14,6 +14,7 @@ RUN apt install -y \
 USER airflow
 RUN pip install mysqlclient
 RUN pip install yfinance
+RUN pip install pyarrow
 
 COPY ./dags /opt/airflow/dags
 COPY ./modules /opt/airflow/modules

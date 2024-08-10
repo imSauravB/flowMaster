@@ -2,7 +2,7 @@
 
 echo "Starting airflow DB init and user Create!"
 
-airflow db init
+airflow db migrate
 airflow users create \
   --username "airflow" \
   --firstname "airflow" \
