@@ -11,7 +11,7 @@ def save_data(file_content: Union[List[Dict], Dict, List, str, pd.DataFrame], fi
         dir_path = f"{base_path}/{zone}/{context}/{current_date}"
         print(f'Going to create this dir:  {dir_path}')
         if not os.path.isdir(dir_path):
-            os.mkdir(dir_path)
+            os.makedirs(dir_path)
         file_path = f"{dir_path}/{file_name}.{file_type}"
         print(f'{file_path}')
         if file_type == "json":

@@ -19,5 +19,4 @@ COPY ./dags /opt/airflow/dags
 COPY ./modules /opt/airflow/modules
 COPY ./scripts /opt/airflow/scripts
 COPY ./utils /opt/airflow/utils
-
-COPY entrypoint.sh /opt/airflow/
+COPY ./configs /opt/airflow/configs

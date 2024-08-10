@@ -1,3 +1,5 @@
+import sys
+sys.path.append('/opt/airflow')
 from datetime import datetime
 from airflow import DAG
 from airflow.operators.bash import BashOperator
@@ -15,8 +17,8 @@ stocks_etl_dag = DAG(
         'email': ['sauravkumarbehera@gmail.com', 'shaswatranjan.odisha@gmail.com'],
         'email_on_failure': False,
         'email_on_retry': False,
-        'retries': 3,
-        'retry_delay': timedelta(minutes=3),
+        # 'retries': 1,
+        # 'retry_delay': timedelta(minutes=1),
         # 'start_date': days_ago(2),
         # 'queue': 'bash_queue',
         # 'pool': 'backfill',
@@ -39,7 +41,7 @@ stocks_etl_dag = DAG(
 collect_books_task = BashOperator(
     task_id="collect_stocks",
     dag=stocks_etl_dag,
-    env={{"DATA_LAKE_PATH": Constants.BASE_DATA_LAKE_PATH}},
+    env={"DATA_LAKE_PATH": Constants.BASE_DATA_LAKE_PATH},
     bash_command=f"python3 {Constants.BASE_MODULE_PATH}collect_stocks.py --data_lake_path $DATA_LAKE_PATH",
 )
 

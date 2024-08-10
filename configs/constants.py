@@ -1,5 +1,5 @@
 BASE_MODULE_PATH = "/opt/airflow/modules/"
-BASE_DATA_LAKE_PATH = "/opt/airflow/data/"
+BASE_DATA_LAKE_PATH = "/opt/airflow/data"
 RAW_STOCKS_FOLDER_PATH = "raw/stocks"
 PROCESSED_STOCKS_FOLDER_PATH = "refined/stocks"
 RAW_BOOKS_FOLDER_PATH = "raw/stocks"
