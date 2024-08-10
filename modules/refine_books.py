@@ -1,9 +1,8 @@
 import os
 import json
 import pandas as pd
-from utils import save_data
-from pprint import pprint
 from datetime import datetime
+from utils.utils import save_data
 
 RAW_FOLDER_PATH = "./data/raw/books"
 

@@ -1,8 +1,8 @@
 from datetime import datetime
 from airflow import DAG
+from airflow.operators.bash import BashOperator
 from datetime import datetime, timedelta
 import configs.constants as Constants
-
 
 stocks_etl_dag = DAG(
     dag_id="stocks_etl_dag",
@@ -47,5 +47,5 @@ refine_books_task = BashOperator(
     task_id="refine_stocks",
     dag=stocks_etl_dag,
     env={"DATA_LAKE_PATH": Constants.BASE_DATA_LAKE_PATH},
-    bash_command=f"python3 {Constants.BASE_MODULE_PATH}treat_books.py --data_lake_path $DATA_LAKE_PATH",
+    bash_command=f"python3 {Constants.BASE_MODULE_PATH}refine_stocks.py --data_lake_path $DATA_LAKE_PATH",
 )

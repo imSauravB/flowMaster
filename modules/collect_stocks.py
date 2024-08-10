@@ -1,11 +1,11 @@
 from urllib import request
 from yfinance import Ticker
-from typing import Dict
 from pprint import pprint
 from datetime import datetime
 import requests
-from utils import save_data
+from utils.utils import save_data
 from argparse import ArgumentParser
+import configs.constants as Constants
 
 ticker_list = ['APPL', 'MSFT', 'AMZN', 'META', 'NTFX', 'GOOG']
 
@@ -31,7 +31,7 @@ def get_top_100_stocks():
         headers = {
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
         }
-        res = requests.get("https://api.nasdaq.com/api/quote/list-type/nasdaq100", headers=headers)
+        res = requests.get(Constants.NASDAQ_URL, headers=headers)
         main_data = res.json().get('data', {}).get('data', {}).get('rows', [])
         stock_symbols = [item['symbol'] for item in main_data]
         return stock_symbols
@@ -49,4 +49,4 @@ if __name__ == "__main__":
         stock_data = collect_stock_data(ticker)
         if stock_data is not None:
             file_name = f"{current_date}_stock_{ticker}"
-            save_data(stock_data, file_name, base_path=data_lake_path, zone="raw", context="stocks", file_type="csv")
+            save_data(stock_data, file_name, base_path=data_lake_path, zone="raw", context="stocks", file_type=Constants.STOCKS_FILE_FORMAT)
