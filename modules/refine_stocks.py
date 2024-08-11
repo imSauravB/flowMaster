@@ -1,4 +1,5 @@
 import os
+from queue import Empty
 import sys
 sys.path.append('/opt/airflow')
 from argparse import ArgumentParser
@@ -10,7 +11,12 @@ import time
 
 processed_stocks = []
 
-def dataPreProcessing(data_lake_path: str):
+def dataPreProcessing(data_lake_path: str = None, **kwargs):
+    
+    if data_lake_path is None:
+        ti = kwargs['ti']
+        data_lake_path = ti.xcom_pull(key='data_lake_path')
+
     for dir in os.listdir(os.path.join(data_lake_path,Constants.RAW_STOCKS_FOLDER_PATH)):
         for file_name in os.listdir( os.path.join(data_lake_path,Constants.RAW_STOCKS_FOLDER_PATH, dir) ):
             file_path = os.path.join(data_lake_path, Constants.RAW_STOCKS_FOLDER_PATH, dir, file_name)
