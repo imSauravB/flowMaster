@@ -4,8 +4,8 @@ import os
 import csv
 from typing import Dict, List, Union
 from datetime import datetime
-import pyarrow as pa
-import pyarrow.parquet as pq
+#import pyarrow as pa
+#import pyarrow.parquet as pq
 
 def save_data(file_content: Union[List[Dict], Dict, List, str, pd.DataFrame], file_name: str, file_type: str, base_path="./data", zone: str = "raw", context: str = "books") -> str:
     try:
@@ -36,9 +36,9 @@ def save_data(file_content: Union[List[Dict], Dict, List, str, pd.DataFrame], fi
         
         elif file_type == "parquet":
             df = pd.DataFrame(file_content)
-            table = pa.Table.from_pandas(df)
-            pq.write_table(table, file_path)
-            #df.to_parquet(file_path, index=False)
+            #table = pa.Table.from_pandas(df)
+            #pq.write_table(table, file_path)
+            df.to_parquet(file_path, index=False)
         
         else:
             return f"Unsupported file type: {file_type}"
